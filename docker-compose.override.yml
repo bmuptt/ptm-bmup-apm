@@ -1,0 +1,9 @@
+services:
+  elasticsearch:
+    restart: "no"
+
+  kibana:
+    restart: "no"
+
+  apm-server:
+    restart: "no"
