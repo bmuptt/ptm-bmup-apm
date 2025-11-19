@@ -2,8 +2,13 @@ services:
   elasticsearch:
     restart: always
 
+  setup:
+    restart: "no"
+
   kibana:
     restart: always
 
   apm-server:
     restart: always
+    volumes:
+      - ./apm-server.prod.yml:/usr/share/apm-server/apm-server.yml:ro

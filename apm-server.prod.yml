@@ -1,0 +1,65 @@
+apm-server:
+  host: "0.0.0.0:8200"
+
+  # Auth configuration - restrict anonymous access to RUM only
+  auth:
+    api_key:
+      enabled: true
+    # secret_token: "${APM_SECRET_TOKEN}"
+    # Anonymous access - HANYA untuk RUM agents
+    # Backend agents (nodejs, php, java, dll) WAJIB pakai secret_token
+    anonymous:
+      enabled: true
+      allow_agent: [rum-js, js-base]
+      allow_service: []
+      rate_limit:
+        ip_limit: 100
+        event_limit: 50
+  
+  # Enable RUM
+  rum:
+    enabled: true
+    # PRODUCTION: Ganti dengan domain frontend Anda
+    allow_origins: 
+      - "https://frontend.bmup.com"
+      - "https://admin.bmup.com"
+      - "https://www.bmup.com"
+    allow_headers:
+      - "*"
+    event_rate:
+      limit: 300
+      lru_size: 1000
+    # RUM juga perlu autentikasi
+    allow_service_names: []
+
+# Output ke Elasticsearch
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  username: "${ELASTIC_USERNAME}"
+  password: "${ELASTIC_PASSWORD}"
+
+# Kibana configuration
+apm-server.kibana:
+  enabled: true
+  host: "http://kibana:5601"
+  username: "${ELASTIC_USERNAME}"
+  password: "${ELASTIC_PASSWORD}"
+
+# Logging
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/apm-server
+  name: apm-server
+  keepfiles: 7
+  permissions: 0644
+
+# Setup
+setup:
+  kibana:
+    host: "http://kibana:5601"
+    username: "${ELASTIC_USERNAME}"
+    password: "${ELASTIC_PASSWORD}"
+  template:
+    enabled: true
+

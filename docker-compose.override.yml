@@ -7,3 +7,5 @@ services:
 
   apm-server:
     restart: "no"
+    volumes:
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
