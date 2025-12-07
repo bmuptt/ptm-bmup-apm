@@ -2,9 +2,6 @@ services:
   elasticsearch:
     restart: always
 
-  setup:
-    restart: "no"
-
   kibana:
     restart: always
 
